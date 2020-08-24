@@ -15,7 +15,8 @@ type Server struct {
 
 // Logger represents the logger configuration properties
 type Logger struct {
-	Level string
+	Level  string
+	Syslog bool
 }
 
 // RabbitMQ represents the rabbitmq configuration properties
@@ -30,10 +31,15 @@ type MongoDB struct {
 	Name string
 }
 
-// Users represents the users service configuration properties
-type Users struct {
+// Things represents the things service configuration properties
+type Things struct {
 	Host string
 	Port int
+}
+
+// Expiration represents the data TTL configuration
+type Expiration struct {
+	Time int32
 }
 
 // Config represents the service configuration
@@ -42,11 +48,12 @@ type Config struct {
 	Logger
 	RabbitMQ
 	MongoDB
-	Users
+	Things
+	Expiration
 }
 
 func readFile(name string) {
-	logger := logging.NewLogrus("error").Get("Config")
+	logger := logging.NewLogrus("error", false).Get("Config")
 	viper.SetConfigName(name)
 	if err := viper.ReadInConfig(); err != nil {
 		logger.Fatalf("Error reading config file, %s", err)
@@ -56,7 +63,7 @@ func readFile(name string) {
 // Load returns the service configuration
 func Load() Config {
 	var configuration Config
-	logger := logging.NewLogrus("error").Get("Config")
+	logger := logging.NewLogrus("error", false).Get("Config")
 	viper.AddConfigPath("internal/config")
 	viper.SetConfigType("yaml")
 

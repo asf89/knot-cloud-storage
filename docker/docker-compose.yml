@@ -4,7 +4,11 @@ services:
   # Mainflux services
   users:
     image: mainflux/users:0.10.0
+<<<<<<< HEAD
     env_file: '../../stack/env.d/mainflux-users.env'
+=======
+    env_file: './env.d/mainflux-users.env'
+>>>>>>> c49e63fc801cab77aac739ca27144dd38a912c85
     depends_on:
       - users-db
     deploy:
@@ -12,7 +16,11 @@ services:
   
   things:
     image: mainflux/things:0.10.0
+<<<<<<< HEAD
     env_file: '../../stack/env.d/mainflux-things.env'
+=======
+    env_file: './env.d/mainflux-things.env'
+>>>>>>> c49e63fc801cab77aac739ca27144dd38a912c85
     depends_on:
       - things-db
       - users
@@ -21,15 +29,26 @@ services:
 
   authn:
     image: mainflux/authn:0.10.0
+<<<<<<< HEAD
     env_file: '../../stack/env.d/mainflux-authn.env'    
     depends_on:
       - authn-db
+=======
+    env_file: './env.d/mainflux-authn.env'    
+    depends_on:
+      - authn-db
+      - jaeger
+>>>>>>> c49e63fc801cab77aac739ca27144dd38a912c85
     deploy:
       replicas: 1
   
   users-db:
     image: postgres:9.6.17-alpine
+<<<<<<< HEAD
     env_file: '../../stack/env.d/mainflux-users.env'
+=======
+    env_file: './env.d/mainflux-users.env'
+>>>>>>> c49e63fc801cab77aac739ca27144dd38a912c85
     volumes:
       - mainflux-users-db-volume:/var/lib/postgresql/data
     deploy:
@@ -37,7 +56,11 @@ services:
   
   things-db:
     image: postgres:9.6.17-alpine
+<<<<<<< HEAD
     env_file: '../../stack/env.d/mainflux-things.env'
+=======
+    env_file: './env.d/mainflux-things.env'
+>>>>>>> c49e63fc801cab77aac739ca27144dd38a912c85
     volumes:
       - mainflux-things-db-volume:/var/lib/postgresql/data
     deploy:
@@ -45,15 +68,31 @@ services:
   
   authn-db:
     image: postgres:9.6.17-alpine
+<<<<<<< HEAD
     env_file: '../../stack/env.d/mainflux-authn.env'
+=======
+    env_file: './env.d/mainflux-authn.env'
+>>>>>>> c49e63fc801cab77aac739ca27144dd38a912c85
     volumes:
       - mainflux-authn-db-volume:/var/lib/postgresql/data
     deploy:
       replicas: 1
   
+<<<<<<< HEAD
   rabbitmq:
     image: rabbitmq
     env_file: '../../stack/env.d/rabbitmq.env'
+=======
+  jaeger:
+    image: jaegertracing/all-in-one:1.13
+    env_file: './env.d/mainflux-jaeger.env'
+    deploy:
+      replicas: 1
+  
+  rabbitmq:
+    image: rabbitmq
+    env_file: './env.d/rabbitmq.env'
+>>>>>>> c49e63fc801cab77aac739ca27144dd38a912c85
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
     deploy:
